@@ -1,3 +1,6 @@
+# Mic The Monkeys  Maths Mayhem
+This app was made for a school assignment but its pretty fun to play so i  put it on github. The app is available online [You can find it here](http://mics-maths-mayhem.web.app/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
