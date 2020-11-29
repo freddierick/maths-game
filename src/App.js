@@ -21,7 +21,6 @@ class App extends React.Component {
       page: blank
      };
      this.setState({page: Dashboard})
-    // this.handleClick = this.handleClick.bind(this);
   }
   render() {
     return (
@@ -36,13 +35,13 @@ class App extends React.Component {
           <Route path="/logout" component={logOut} />
         </Switch>
     </Router>
-    )
+    ) //used for routing the user to the right class
   }
 }
-function logOut(props){
+function logOut(props){ //logout handler
   localStorage.removeItem ('uid')
-  localStorage.removeItem ('username')
-  return <Redirect to="/login" />
+  localStorage.removeItem ('username') //clear section data
+  return <Redirect to="/login" /> 
 }
 
 

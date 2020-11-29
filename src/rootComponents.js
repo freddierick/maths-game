@@ -1,7 +1,5 @@
 import React from "react"
 import { Link, Redirect } from 'react-router-dom';
-import {loginHandler, register} from './loginHandler';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 import Login from './element/login';
 import Register from './element/register';
 import Game from './element/game'
@@ -11,7 +9,7 @@ function Back(props) {
 }
 
 
-class Template extends React.Component {
+class Template extends React.Component { //template to be used with most pages
   render() {
     return (
       <div>
@@ -25,10 +23,7 @@ class Template extends React.Component {
   }
 }
 
-class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-}
+class Dashboard extends React.Component { //dashboard
     render() {
       if (!localStorage.getItem('uid')) return(
         <Redirect to="/login" />
@@ -52,7 +47,7 @@ class Dashboard extends React.Component {
 
           </div>
         </div>
-      )
+      ) //dashboard menu
     }
   }
 
@@ -74,7 +69,7 @@ class Dashboard extends React.Component {
 
       </div>
         
-      )
+      )//home menu
     }
   }
 export {Home, Dashboard, Login, Register, Back, Template, Game, Leaderboard};

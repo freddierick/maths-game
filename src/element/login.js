@@ -14,10 +14,10 @@ class Login extends React.Component {
       };
       this.handleChange = this.handleChange.bind(this);
       this.login = async () => {
-        let response = await  loginHandler(this.state.Email, this.state.Password)
+        await  loginHandler(this.state.Email, this.state.Password) //logs the user in
         .then(() => this.setState({}  ))
         .catch( (error) =>{
-          NotificationManager.error(error.message, `Error ${error.code}`, 5000)
+          NotificationManager.error(error.message, `Error ${error.code}`, 5000) //if error tell the user
         })
         
       }
@@ -52,7 +52,7 @@ class Login extends React.Component {
 
       </div>
         
-      )
+      ) //login menu
     }
   }
 export default Login;
