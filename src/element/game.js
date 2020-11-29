@@ -4,6 +4,8 @@ import {Back} from '../rootComponents';
 import {Firebase} from '../App';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { ProgressBar } from 'react-bootstrap';
+import ReactPlayer from "react-player"
+
 
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -25,7 +27,10 @@ class Game extends React.Component {
         timeLeft: 0,
         currantQuestion: {},
         gameOver:false,
-        scoreSaved:false
+        scoreSaved:false,
+
+        sound:true,
+        playSound:"/music.mp3"
        }; //create default state
        
        this.timeLeft = (props) => {
@@ -134,6 +139,9 @@ class Game extends React.Component {
 
       return (
           <div>
+          
+        {this.state.sound ? <ReactPlayer url={this.state.playSound} loop={true} playing="true" />: <div />} {/*sound if it is required*/}
+
         <h1 style={{textAlign: "center"}} styles="font-family: 'Lucida Console', Courier, monospace;">Mic The Monkeys  Maths Mayhem</h1>
         {this.level>0 ? <this.timeLeft time={this.state.timeLeft}/> : <div />} {/*Adds a timer on the screen if the level is > than 0*/}
         <this.score score={this.state.score} />
