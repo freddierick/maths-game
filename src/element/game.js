@@ -1,10 +1,9 @@
 import React from "react"
-import { Link } from 'react-router-dom';
-import {Back, Template} from '../rootComponents';
+import { Link, Redirect } from 'react-router-dom';
+import {Back} from '../rootComponents';
 import {Firebase} from '../App';
-import {loginHandler, register} from '../loginHandler';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
-
+import { ProgressBar } from 'react-bootstrap';
 
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -15,7 +14,7 @@ class Game extends React.Component {
     constructor(props) {
       super(props);
       this.level = localStorage.getItem('gameLevel');
-      this.time = 0; if (this.level == 1); this.time = 20;if (this.level == 2) this.time = 10;
+      this.time = 0; if (this.level === 1); this.time = 20;if (this.level === 2) this.time = 10;
       this.state = {
         currantQuestionNum:0,
         score:0,
@@ -51,7 +50,7 @@ class Game extends React.Component {
             let currentQuestion = this.state.currantQuestion;
             let correctIndex = currentQuestion.options.indexOf(currentQuestion.answer);
 
-            if (correctIndex==answer){
+            if (correctIndex===answer){
                 let newStyle = this.state.styles[correctIndex] = {backgroundColor: "green"}
                 
                 this.setState({displayingCorrect:true, style:newStyle, score: this.state.score+1000 })
@@ -63,7 +62,7 @@ class Game extends React.Component {
             }
        }
        this.nextQuestion = () => {
-           if (this.state.currantQuestionNum+1 == this.state.questions.length) return this.setState({gameOver:true}) 
+           if (this.state.currantQuestionNum+1 === this.state.questions.length) return this.setState({gameOver:true}) 
             this.setState({currantQuestionNum: this.state.currantQuestionNum+1, currantQuestion: this.state.questions[this.state.currantQuestionNum+1],styles:[{},{},{},{}],displayingCorrect:false, timeLeft: this.time})
          }
 
@@ -102,6 +101,9 @@ class Game extends React.Component {
     }
 
     render() {
+        if (!localStorage.getItem('uid')) return(
+            <Redirect to="/login" />
+          )
         if(this.state.gameOver) return(
             <div>
               <h1 style={{textAlign: "center"}} styles="font-family: 'Lucida Console', Courier, monospace;">Mic The Monkeys  Maths Mayhem</h1>
@@ -138,6 +140,7 @@ class Game extends React.Component {
         {this.level>0 ? <this.timeLeft time={this.state.timeLeft}/> : <div />} {/*Adds a timer on the screen if the level is > than 0*/}
         <this.score score={this.state.score} />
         <div class="gameBox">
+        <ProgressBar animated variant="info" now={this.state.currantQuestionNum*10   + (this.state.displayingCorrect ? (10) : (0))} label={this.state.currantQuestionNum*10+ (this.state.displayingCorrect ? (10) : (0))+"%"} /><br />
           <h2>{this.state.currantQuestion.num0} {this.state.currantQuestion.arithmetic} {this.state.currantQuestion.num1} = ?</h2>
           <button class="button2" style={this.state.styles[0]} onClick={() => {this.clickAnswer(0)}} >{this.state.currantQuestion.options[0]}</button> <br/>
           <button class="button2" style={this.state.styles[1]} onClick={() => {this.clickAnswer(1)}} >{this.state.currantQuestion.options[1]}</button> <br/>
@@ -162,8 +165,8 @@ class Game extends React.Component {
 
         let randomArithmetic = arithmetic[Math.floor((Math.random() * arithmetic.length))]
         let answer = "";
-        if (randomArithmetic == "+") answer = randomNumbers[0]+randomNumbers[1]
-        else if (randomArithmetic == "-"){
+        if (randomArithmetic === "+") answer = randomNumbers[0]+randomNumbers[1]
+        else if (randomArithmetic === "-"){
             answer = randomNumbers[0]-randomNumbers[1]
             while (randomNumbers[0] < randomNumbers[1]){
                 randomNumbers[0] = Math.floor((Math.random() * 12) + 1);
@@ -171,15 +174,15 @@ class Game extends React.Component {
                 answer = randomNumbers[0]-randomNumbers[1]
             }
         }
-        else if (randomArithmetic == "÷") {
+        else if (randomArithmetic === "÷") {
             answer = Math.floor(randomNumbers[0]/randomNumbers[1])
-            while (randomNumbers[0] % randomNumbers[1] != 0){
+            while (randomNumbers[0] % randomNumbers[1] !== 0){
                 randomNumbers[0] = Math.floor((Math.random() * 12) + 1);
                 randomNumbers[1] = Math.floor((Math.random() * 12) + 1);
                 answer = randomNumbers[0]/randomNumbers[1]
             }
         }
-        else if (randomArithmetic == "x") {answer= randomNumbers[0]*randomNumbers[1]}
+        else if (randomArithmetic === "x") {answer= randomNumbers[0]*randomNumbers[1]}
         let options = generateOptions(answer);
         questions.push({
             num0: randomNumbers[0],
@@ -190,6 +193,7 @@ class Game extends React.Component {
 
         })
     }
+    console.log(questions)
     return questions
     }
     function generateOptions(correctAnswer){

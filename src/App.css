@@ -104,9 +104,15 @@ body {
   margin: 10px;
   margin: 0 auto;
   display: block;
-
-
-  
+}
+.button3{
+  transition: all .2s ease-in-out;
+  background-color: gray; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
 }
 input {
   width: 100%;
@@ -153,4 +159,17 @@ input {
   top: 0px;
   left: 0px;
   text-align: center;
+}
+table, th, td {
+  border: 1px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  border-spacing: 5px;
+  background-color: #4CAF50;
+  color: white;
+  
+}
+table{
+  width: 90%;
 }

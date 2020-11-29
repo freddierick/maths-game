@@ -10,24 +10,26 @@ class Login extends React.Component {
       this.state = {
         Email:"",
         Password:"",
+        loggedIn: false
       };
       this.handleChange = this.handleChange.bind(this);
       this.login = async () => {
         let response = await  loginHandler(this.state.Email, this.state.Password)
-        .then(() => this.setState({Email:""}) )
-        
-
+        .then(() => this.setState({}  ))
         .catch( (error) =>{
           NotificationManager.error(error.message, `Error ${error.code}`, 5000)
         })
+        
       }
+      this.login = this.login.bind(this);
+
     }
     handleChange(event) {
         this.setState({[event.target.name]:event.target.value})
       }
     
     render() {
-      if (localStorage.getItem('uid')) return(
+      if (localStorage.getItem('uid')  || this.state.loggedIn ) return(
         <Redirect to="/dashboard" />
       ) 
       return (
@@ -40,7 +42,7 @@ class Login extends React.Component {
               <input type="email" name="Email" onChange={this.handleChange} placeholder="Email" />
               <input type="password" name="Password" onChange={this.handleChange} placeholder="Password" />
             </form>
-            <button type="submit"class="button1" onClick={async () => {this.login()}}>Login</button>
+            <button type="submit"class="button1" onClick={async () => {await this.login(); return this.setState({loggedIn:true})}}>Login</button>
 
             <Link to={"/register"}><h6>Don't have an account yet? Register</h6></Link>
           </div>

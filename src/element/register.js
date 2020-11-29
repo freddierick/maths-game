@@ -11,7 +11,8 @@ class Register extends React.Component {
         Email:"",
         Username:"",
         Password:"",
-        passwordConf:""
+        passwordConf:"",
+
       };
       this.handleChange = this.handleChange.bind(this);
       this.register = async () => {
@@ -20,6 +21,7 @@ class Register extends React.Component {
         .catch( (error) =>{
             NotificationManager.error(error.message, `Error ${error.code}`, 5000)
         })
+
       }
     }
     handleChange(event) {
@@ -27,6 +29,7 @@ class Register extends React.Component {
       }
 
     render() {
+      
       if (localStorage.getItem('uid')) return(
         <Redirect to="/dashboard" />
       )

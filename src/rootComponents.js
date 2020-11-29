@@ -1,12 +1,13 @@
 import React from "react"
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {loginHandler, register} from './loginHandler';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import Login from './element/login';
 import Register from './element/register';
 import Game from './element/game'
+import Leaderboard from './element/leaderboard'
 function Back(props) {
-  return <Link to={"/"} style={{position:"fixed", bottom:"0px",left:"0px"}}><h6>Home</h6></Link>;
+  return <div><Link to={"/dashboard"} style={{position:"fixed", bottom:"0px",left:"0px"}}><img src="/home.svg" alt="home" hight="50px" width="50px" /></Link><br /><Link  to={"/logout"} style={{position:"fixed", bottom:"0px",left:"60px"}}><img src="/logout.svg" alt="home" hight="50px" width="50px" /></Link></div>;
 }
 
 
@@ -29,9 +30,13 @@ class Dashboard extends React.Component {
     super(props);
 }
     render() {
+      if (!localStorage.getItem('uid')) return(
+        <Redirect to="/login" />
+      )
       return (
         <div>
         <Template />
+
         <div class="split left">
           <div class="leftPageContentBox">
           <h3>Welcome back {localStorage.getItem('username')}! What would you like to do today?</h3>
@@ -41,10 +46,11 @@ class Dashboard extends React.Component {
          <Link to={"/game"}><button onClick={() => { localStorage.setItem('gameLevel', 2) }} class="button1" type="submit">Level 2</button></Link> <br/>
           <br />
           <h6>Leaderboards</h6>
-          <Link to={"/leaderboards"}><button class="button1" type="submit">Leaderboards</button></Link>
-          </div>
+          <Link to={"/leaderboard"}><button class="button1" type="submit">Leaderboards</button></Link>
           </div>
         <Back />
+
+          </div>
         </div>
       )
     }
@@ -61,7 +67,6 @@ class Dashboard extends React.Component {
           <h3>Welcome to Maths Mayhem! would you like to login or register today?</h3>
           <Link to={"/login"}><button class="button1" type="submit">Login</button></Link> <br/>
           <Link to={"/register"}><button class="button1" type="submit">Register</button></Link>
-          <Link to={"/dashboard"}><button class="button1" type="submit">NOT ADDED GO TO DASH</button></Link>
           </div>
         <Back />
 
@@ -72,4 +77,4 @@ class Dashboard extends React.Component {
       )
     }
   }
-export {Home, Dashboard, Login, Register, Back, Template, Game};
+export {Home, Dashboard, Login, Register, Back, Template, Game, Leaderboard};
