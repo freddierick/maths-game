@@ -1,7 +1,7 @@
 import React from "react"
-import { Link } from 'react-router-dom';
-import {Back, Template} from '../rootComponents';
-import {loginHandler, register} from '../loginHandler';
+import { Link, Redirect } from 'react-router-dom';
+import {Back, Template } from '../rootComponents';
+import {loginHandler} from '../loginHandler';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class Login extends React.Component {
@@ -14,6 +14,9 @@ class Login extends React.Component {
       this.handleChange = this.handleChange.bind(this);
       this.login = async () => {
         let response = await  loginHandler(this.state.Email, this.state.Password)
+        .then(() => this.setState({Email:""}) )
+        
+
         .catch( (error) =>{
           NotificationManager.error(error.message, `Error ${error.code}`, 5000)
         })
@@ -24,6 +27,9 @@ class Login extends React.Component {
       }
     
     render() {
+      if (localStorage.getItem('uid')) return(
+        <Redirect to="/dashboard" />
+      ) 
       return (
         <div>
           <Template />

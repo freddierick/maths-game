@@ -34,7 +34,7 @@ class Dashboard extends React.Component {
         <Template />
         <div class="split left">
           <div class="leftPageContentBox">
-          <h3>Welcome back `USERNAME`! What would you like to do today?</h3>
+          <h3>Welcome back {localStorage.getItem('username')}! What would you like to do today?</h3>
           <h6>Games</h6>
         <Link to={"/game"}><button onClick={() => { localStorage.setItem('gameLevel', 0) }} styles="box-shadow: 0px 0px 0px 13px rgba(34,255,0,1);" class="button1" type="submit">Level 0</button></Link> <br/>
          <Link to={"/game"}><button onClick={() => { localStorage.setItem('gameLevel', 1) }} class="button1" type="submit">Level 1</button></Link> <br/>

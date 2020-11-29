@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {Back, Template} from '../rootComponents';
 import {loginHandler, register} from '../loginHandler';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
@@ -16,6 +16,7 @@ class Register extends React.Component {
       this.handleChange = this.handleChange.bind(this);
       this.register = async () => {
         let response = await  register(this.state.Email, this.state.Password, this.state.Username)
+        .then(() => this.setState({}  ))
         .catch( (error) =>{
             NotificationManager.error(error.message, `Error ${error.code}`, 5000)
         })
@@ -26,6 +27,9 @@ class Register extends React.Component {
       }
 
     render() {
+      if (localStorage.getItem('uid')) return(
+        <Redirect to="/dashboard" />
+      )
       return (
         <div>
           <Template />

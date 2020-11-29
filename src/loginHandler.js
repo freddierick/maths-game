@@ -8,9 +8,8 @@ function loginHandler(email, password){
             
         .then((user) => {
             return Firebase.database().ref('/users/' + user.user.uid).once('value').then((snapshot) => {
-                console.log(snapshot)
                 localStorage.setItem('uid', user.user.uid)
-                localStorage.setItem('username',snapshot.node.children.root.value)
+                localStorage.setItem('username',snapshot.node_.children_.root_.value.value_)
             });
 
             res()

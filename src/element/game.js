@@ -5,6 +5,7 @@ import {Firebase} from '../App';
 import {loginHandler, register} from '../loginHandler';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 
+
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
   }
@@ -24,7 +25,8 @@ class Game extends React.Component {
         displayingCorrect:false,
         timeLeft: 0,
         currantQuestion: {},
-        gameOver:false
+        gameOver:false,
+        scoreSaved:false
        };
        
        this.timeLeft = (props) => {
@@ -80,13 +82,10 @@ class Game extends React.Component {
         
     }
     async componentDidUpdate(prevProps, prevState) {
-        if (this.state.gameOver){
-            // let newScore = Firebase.database().ref('scores/' + "freddie")
-            // if(newScore==null) newScore=[]
-
-            // newScore.push({score: this.state.score, level:this.level})
-
-            // Firebase.database().ref('scores/' + "freddie").set(newScore);
+        if (this.state.gameOver && !this.state.scoreSaved){
+            Firebase.database().ref('/scores').push({user: localStorage.getItem('uid'), score:this.state.score, level:this.level});
+            NotificationManager.success("Your score was saved successfully", `Added your score to the leaderboards`, 5000)
+            this.setState({scoreSaved:true})
         }
         let currentQuestion = this.state.currantQuestion;
         let correctIndex = currentQuestion.options.indexOf(currentQuestion.answer);
@@ -112,7 +111,8 @@ class Game extends React.Component {
                   <Link to="/dashboard"><button class="button1" >Dashboard</button> <br/></Link>
                   <Link to="/leaderboard"><button class="button1" >Leaderboard</button> <br/></Link>
               </div>
-              <Back />
+                <NotificationContainer/>
+                <Back />
           </div>
           );
 
@@ -153,7 +153,7 @@ class Game extends React.Component {
   }
   function calculateQuestions(levle){
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-    const arithmetic = ["+","-","/","x"]
+    const arithmetic = ["+","-","÷","x"]
     const randomNumbers = [0, 0];
     const questions = [];
     for (let index = 0; index < 10; index++) {
@@ -171,7 +171,7 @@ class Game extends React.Component {
                 answer = randomNumbers[0]-randomNumbers[1]
             }
         }
-        else if (randomArithmetic == "/") {
+        else if (randomArithmetic == "÷") {
             answer = Math.floor(randomNumbers[0]/randomNumbers[1])
             while (randomNumbers[0] % randomNumbers[1] != 0){
                 randomNumbers[0] = Math.floor((Math.random() * 12) + 1);
