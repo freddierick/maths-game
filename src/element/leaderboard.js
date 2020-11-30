@@ -14,24 +14,30 @@ class Leaderboard extends React.Component {
         //this fetches users scores for a given level
         return Firebase.database().ref('/scores').once('value').then((snapshot) => {
             let data = snapshot.val()
-            console.log(data)
             let scores = {}
             Object.keys(data).forEach(element => {
-                console.log(data[element])
-                if(data[element].level===level){
+
+                if(data[element].level==level){
+
                     if (!scores[data[element].user]) scores[data[element].user] = {score: 0};
                     scores[data[element].user].score += data[element].score //makes an object with all the users total scores
                 }
             });
+
+
             // end fetch user scores 
             let userArray = []
             return Firebase.database().ref('/users/').once('value').then((snapshot) => { //fetches user data
                 let data = snapshot.val()
+
+
                 Object.keys(scores).forEach(element => {  // adds the usernames to there scores
                     scores[element].username = data[element].username;
                     userArray.push(scores[element])
                 })
+
                 let sortedUserArray = userArray.sort(function(a, b){return b.score-a.score}); //sorts the data
+
                 if (sortedUserArray[0]==null) return this.setState({leaderboard:(<h3>Their is no data for this leaderboard right now!</h3>)}) //if there is no data display error
                 let max = 10;
                 if (sortedUserArray.length < 10) max = sortedUserArray.length; //if there is less than 10 entrees in the leaderboard 
@@ -39,8 +45,8 @@ class Leaderboard extends React.Component {
                 for (let i = 0; i < max; i++) {
                     JSX.push( <tr>
                         <td>{i+1}</td>
-                        <td>{sortedUserArray[i].score}</td>
                         <td>{sortedUserArray[i].username}</td>
+                        <td>{sortedUserArray[i].score}</td>
                     </tr> ) //compile the leaderboard data to be displayed
                 }
 

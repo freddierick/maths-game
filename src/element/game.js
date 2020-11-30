@@ -11,7 +11,7 @@ function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
   }
 
-const introPage = ["unlimited","20 seconds","10 seconds"]
+const introPage = ["unlimited time","20 seconds","10 seconds"]
 class Game extends React.Component {
     constructor(props) {
       super(props);
@@ -128,7 +128,7 @@ class Game extends React.Component {
             <h1 style={{textAlign: "center"}} styles="font-family: 'Lucida Console', Courier, monospace;">Mic The Monkeys  Maths Mayhem</h1>
             <div class="gameBox">
                 <h2>Level {this.level}</h2>
-                <p>Welcome to the game  its quite simple you will be given 10 questions and 4 answers to pick from. you have {introPage[this.level]} time per question, good luck! Press start when you are ready.</p>
+                <p>Welcome to the game  its quite simple you will be given 10 questions and 4 answers to pick from. you have {introPage[this.level]} per question, good luck! Press start when you are ready.</p>
                 <button class="button1" onClick={() => {this.setState({gameStarted:true, timeLeft: this.time})}} >Start</button> <br/>
                 <Link to="/dashboard"><button class="button1" >Back</button> <br/></Link>
             </div>

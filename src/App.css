@@ -173,3 +173,41 @@ table, th, td {
 table{
   width: 90%;
 }
+@media screen and (max-width: 1060px) {
+  .gameBox {
+     width:80%; 
+     margin-left: 0px;
+     }
+  .leftPageContentBox {      
+    width: 100%;
+    margin-left: 0px; 
+    margin: auto;
+    opacity: 0.85;
+  }  
+  .button2{width:80%; }
+  .split {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  .scoreBox{
+    height: 110px;
+    width: 45%;
+    background-color: white;
+    border: 15px solid #4CAF50;
+    padding: 10px;
+    margin: 20px;
+}
+.timeBox{
+  height: 110px;
+  width: 45%;
+  background-color: white;
+  border: 15px solid #4CAF50;
+  padding: 10px;
+  margin: 20px;
+}
+}
