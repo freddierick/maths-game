@@ -16,7 +16,7 @@ class Game extends React.Component {
     constructor(props) {
       super(props);
       this.level = localStorage.getItem('gameLevel');
-      this.time = 0; if (this.level === 1); this.time = 20;if (this.level === 2) this.time = 10;
+      this.time = 0; if (this.level == 1); this.time = 20;if (this.level == 2) this.time = 10;
       this.state = {
         currantQuestionNum:0,
         score:0,
